@@ -39,7 +39,25 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+  function logText(e) {
+    console.log(this.classList.value); //studying BUBBLING now
+    //nested elements: click A which is in B which is in C etc
+    //so when I click the innermost, it listens for the rest too
+    e.stopPropagation(); //means Stop Bubbling
+  }
+  divs.forEach(div => div.addEventListener(
+    'click', logText,{capture: true,//capture true means: run the function all the way DOWN and not up (default = false)
+      once: true //listen for a click ONCE and then UNBIND myself so no feature clicked
+  }));
 
+  button.addEventListener('click', () => {
+    console.log('Click!!');
+  }
+  ,{
+    once: true //only logs once - used in store checkouts!
+  });
 </script>
 </body>
 </html>
